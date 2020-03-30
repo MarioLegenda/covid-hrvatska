@@ -1,0 +1,158 @@
+@import '../../../../styles/variables';
+
+.dialog {
+  padding: 0 50px 0 50px;
+  background-color: white;
+  position: relative;
+
+  font-family: $mainFont;
+
+  .close-dialog {
+    position: absolute;
+    font-size: 1.2em;
+    color: $darkGrey;
+
+    top: -12px; right: -10px;
+
+    i {
+      font-size: 1em;
+      color: $darkGrey;
+
+      &:hover {
+        color: red;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .header {
+    width: 100%;
+    float: left;
+
+    position: relative;
+
+    border-bottom: 1px solid $almostWhiteGray;
+
+    margin-bottom: 40px;
+
+    .icon {
+      position: absolute;
+
+      top: 5px; right: 5px;
+
+      color: $darkGrey
+    }
+
+    p {
+      color: $darkGrey;
+    }
+
+    .highlight {
+      color: $darkGrey;
+      font-weight: bolder;
+    }
+  }
+
+  .header-error {
+    border-bottom: 1px solid red;
+  }
+
+  .info {
+    width: 100%;
+    float: left;
+
+    position: relative;
+
+    padding: 15px;
+    margin-bottom: 40px;
+
+    font-style: italic;
+    font-size: 0.8em;
+    background-color: $almostWhiteGray;
+
+    .title {
+      .icon {
+        font-size: 0.3em;
+        float: left;
+        padding: 10px;
+      }
+    }
+
+    .highlight {
+      color: $darkGrey;
+      font-weight: bolder;
+    }
+  }
+
+  .info-error {
+    background-color: red;
+    color: white;
+  }
+
+  .error {
+    background-color: $darkGrey;
+    border-left: 4px solid $darkGrey;
+    color: white;
+
+    font-size: 0.9em;
+
+    padding: 10px;
+
+    margin-bottom: 40px;
+
+    p {
+      padding: 0; margin: 0;
+    }
+  }
+
+  .dialog-content {
+    width: 100% !important;
+    float: left;
+
+    margin-bottom: 40px;
+
+    .form-field {
+      width: 100%;
+    }
+
+    .form-input {
+      width: 100%;
+    }
+  }
+
+  .dialog-actions {
+    width: 100%;
+    float: left;
+
+    padding: 0; margin: 0;
+
+    .cancel, .create, .danger {
+      display: block;
+    }
+
+    .cancel {
+      float: left;
+    }
+
+    .create {
+      float: right;
+      background-color: $mainColor;
+      color: white;
+    }
+
+    .danger {
+      background-color: red;
+      color: white;
+      float: right;
+    }
+  }
+
+  .form-control{
+    border-width: 1px;
+    border-color: $lightestGray;
+  }
+
+  .form-control:focus {
+    box-shadow: none; -webkit-box-shadow: none;
+  }
+}
