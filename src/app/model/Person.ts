@@ -1,6 +1,7 @@
 import * as slugify from 'slugify';
+import {IUniquePerson} from './IUniquePerson';
 
-export class Person {
+export class Person implements IUniquePerson {
   readonly name: string;
   readonly lastName: string;
   readonly country: string;
@@ -20,6 +21,8 @@ export class Person {
   readonly workPhone: string = null;
   readonly personalPhone: string = null;
   readonly email: string = null;
+
+  listKey: string;
 
   constructor(
     name: string,
@@ -63,8 +66,13 @@ export class Person {
     this.email = email;
   }
 
+  setListKey(listKey: string): void {
+    this.listKey = listKey;
+  }
+
   toFirebaseObject() {
     return {
+      listKey: this.listKey,
       name: this.name,
       lastName: this.lastName,
       country: this.country,
@@ -128,5 +136,9 @@ export class Person {
       replacement: '-',
       lower: true,
     });
+  }
+
+  equals(person: IUniquePerson): boolean {
+    return this.createId() === person.createId();
   }
 }

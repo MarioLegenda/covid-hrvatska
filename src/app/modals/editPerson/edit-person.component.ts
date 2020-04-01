@@ -7,6 +7,8 @@ import {HealthCheck} from '../../model/HealthCheck';
 import {GoogleMaps} from '../../services/GoogleMaps';
 import {PeopleRepository} from '../../services/PeopleRepository';
 import {Subscription} from 'rxjs';
+import {UniquePerson} from '../../model/UniquePerson';
+import {IUniquePerson} from '../../model/IUniquePerson';
 
 @Component({
   selector: 'app-edit-person-dialog',
@@ -54,6 +56,9 @@ export class EditPersonDialogComponent implements OnInit, OnDestroy {
   formLoaded = false;
 
   private updateSubscription: Subscription;
+  private removeSubscription: Subscription;
+
+  private uniquePerson: IUniquePerson;
 
   constructor(
     public dialogRef: MatDialogRef<EditPersonDialogComponent>,
@@ -63,6 +68,14 @@ export class EditPersonDialogComponent implements OnInit, OnDestroy {
   {}
 
   ngOnInit() {
+    const person: Person = this.model.person;
+    this.uniquePerson = new UniquePerson(
+      person.name,
+      person.lastName,
+      person.lat,
+      person.lng,
+    );
+
     this.personForm = StaticPersonForm.createExistingForm(this.model.person);
 
     this.selectedHealth = this.model.person.healthCheck;
@@ -81,6 +94,11 @@ export class EditPersonDialogComponent implements OnInit, OnDestroy {
     if (this.updateSubscription) {
       this.updateSubscription.unsubscribe();
       this.updateSubscription = null;
+    }
+
+    if (this.removeSubscription) {
+      this.removeSubscription.unsubscribe();
+      this.removeSubscription = null;
     }
   }
 
@@ -112,12 +130,34 @@ export class EditPersonDialogComponent implements OnInit, OnDestroy {
       const month = date.getMonth() + 1;
       const year = date.getFullYear();
       values.healthCheckDate = `${day}/${month}/${year}`;
-    } else {
+    } else if (values.healthCheckDate) {
       values.healthCheckDate = this.personForm.value.healthCheckDate.format('D/M/YYYY');
     }
 
     const person: Person = Person.fromObject(values);
 
+    if (!this.uniquePerson.equals(person)) {
+      this.peopleRepository.removePerson(this.uniquePerson).subscribe(() => {
+        this.peopleRepository.savePerson(person).subscribe((model) => {
+          if (model.error) {
+          }
+
+          const person: Person = model.person;
+
+          this.googleMaps.deleteMarkerByPerson(this.uniquePerson);
+          this.googleMaps.addMarker(person.getDisplayName(), person);
+
+          this.dialogRef.close();
+        });
+      });
+
+      return;
+    }
+
+    this.updatePerson(person);
+  }
+
+  private updatePerson(person: Person) {
     this.updateSubscription = this.peopleRepository.updatePerson(person).subscribe((model) => {
       if (model.error) {
         console.log('There has been an error');

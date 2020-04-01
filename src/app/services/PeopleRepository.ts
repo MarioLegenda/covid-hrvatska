@@ -2,6 +2,8 @@ import {Firebase} from './Firebase';
 import {Injectable} from '@angular/core';
 import {Person} from '../model/Person';
 import {ReplaySubject} from 'rxjs';
+import {UniquePerson} from '../model/UniquePerson';
+import {IUniquePerson} from '../model/IUniquePerson';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +12,7 @@ export class PeopleRepository {
   private loadAllSubject: ReplaySubject<Person> = new ReplaySubject<Person>();
   private savePersonSubject: ReplaySubject<any> = new ReplaySubject<any>();
   private updatePersonSubject: ReplaySubject<any> = new ReplaySubject<any>();
+  private removePersonSubject: ReplaySubject<any> = new ReplaySubject<any>();
 
   constructor(
     private firebase: Firebase
@@ -41,7 +44,14 @@ export class PeopleRepository {
         });
       }
 
-      this.firebase.ref(`/people/${id}`).set(person.toFirebaseObject(), (err) => {
+      const pushRef = this.firebase.ref('/people/list').push();
+      const refKey = pushRef.key;
+
+      person.setListKey(refKey);
+
+      const model = person.toFirebaseObject();
+
+      this.firebase.ref(`/people/${id}`).set(model, (err) => {
         if (err) {
           return this.savePersonSubject.next({
             error: new Error('firebase_error'),
@@ -54,8 +64,7 @@ export class PeopleRepository {
           model['lowerLastName'] = model.lastName.toLowerCase();
           model['lowerDisplayName'] = `${model.name.toLowerCase()}${model.lastName.toLowerCase()}`
 
-          const pushRef = this.firebase.ref('/people/list').push();
-          model['refKey'] = pushRef.key;
+          model['refKey'] = refKey;
           pushRef.set(model, (err) => {
             if (err) {
               return this.savePersonSubject.next({
@@ -84,45 +93,60 @@ export class PeopleRepository {
         });
       }
 
+      const val = snapshot.val();
+
+      person.setListKey(val['listKey']);
+
       this.firebase.ref(`/people/${id}`).set(person.toFirebaseObject(), (err) => {
         if (err) {
           return this.updatePersonSubject.next({
             error: new Error('firebase_error'),
           });
         } else {
-          const ref = this.findOne('id', id);
+          const model = person.toFirebaseObject();
+          model['id'] = id;
+          model['lowerName'] = model.name.toLowerCase();
+          model['lowerLastName'] = model.lastName.toLowerCase();
+          model['lowerDisplayName'] = `${model.name.toLowerCase()}${model.lastName.toLowerCase()}`
 
-          ref.once('value', (snapshot) => {
-            const refKey = Object.keys(snapshot.val())[0];
+          const updates = {};
 
-            const model = person.toFirebaseObject();
-            model['id'] = id;
-            model['lowerName'] = model.name.toLowerCase();
-            model['lowerLastName'] = model.lastName.toLowerCase();
-            model['lowerDisplayName'] = `${model.name.toLowerCase()}${model.lastName.toLowerCase()}`
+          updates['/people/list/' + person.listKey] = model;
 
-            const updates = {};
-
-            updates['/people/list/' + refKey] = model;
-
-            this.firebase.database().ref().update(updates, (err) => {
-              if (err) {
-                return this.updatePersonSubject.next({
-                  error: new Error('firebase_error'),
-                });
-              }
-
-              this.updatePersonSubject.next({
-                person: Person.fromObject(model),
+          this.firebase.database().ref().update(updates, (err) => {
+            if (err) {
+              return this.updatePersonSubject.next({
+                error: new Error('firebase_error'),
               });
-            });
+            }
 
-          })
+            this.updatePersonSubject.next({
+              person: Person.fromObject(model),
+            });
+          });
         }
       });
     });
 
     return this.updatePersonSubject;
+  }
+
+  removePerson(person: IUniquePerson): ReplaySubject<any> {
+    const id: string = person.createId();
+
+    this.firebase.ref(`/people/${id}`).once('value', (snapshot) => {
+      const val = snapshot.val();
+
+      const listKey = val['listKey'];
+
+      this.firebase.ref(`/people/list/${listKey}`).remove(() => {
+        this.firebase.ref(`/people/${id}`).remove(() => {
+          this.removePersonSubject.next();
+        });
+      });
+    });
+
+    return this.removePersonSubject;
   }
 
   searchByChild(field: string, value: string, limit: number = 100) {

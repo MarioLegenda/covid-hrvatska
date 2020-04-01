@@ -3,6 +3,7 @@ import {ReplaySubject} from 'rxjs';
 import {LatLng} from './LatLng';
 import {Person} from '../model/Person';
 import {HealthCheck} from '../model/HealthCheck';
+import {IUniquePerson} from '../model/IUniquePerson';
 
 @Injectable({
   providedIn: 'root',
@@ -208,6 +209,16 @@ export class GoogleMaps {
         }
       }
     }
+  }
+
+  deleteMarkerByPerson(person: IUniquePerson): void {
+    const id: string = person.createId();
+
+    const marker = this.markers[id];
+
+    this.unsetMarker(marker.marker);
+
+    delete this.markers[id];
   }
 
   private unsetMarker(marker, clearListener: boolean = true) {
