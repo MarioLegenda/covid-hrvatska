@@ -1,5 +1,6 @@
 import * as firebase from 'firebase';
 import {Injectable} from '@angular/core';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -9,19 +10,27 @@ export class Firebase {
 
   constructor() {
     const firebaseConfig = {
-      apiKey: process.env.FIREBASE_API_KEY,
-      authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-      databaseURL: process.env.FIREBASE_DATABASE_URL,
-      projectId: process.env.FIREBASE_PROJECT_ID,
-      storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-      messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-      appId: process.env.FIREBASE_APP_ID,
-      measurementId: process.env.FIREBASE_MEASUREMENT_ID,
+      apiKey: environment.FIREBASE_API_KEY,
+      authDomain: environment.FIREBASE_AUTH_DOMAIN,
+      databaseURL: environment.FIREBASE_DATABASE_URL,
+      projectId: environment.FIREBASE_PROJECT_ID,
+      storageBucket: environment.FIREBASE_STORAGE_BUCKET,
+      messagingSenderId: environment.FIREBASE_MESSAGING_SENDER_ID,
+      appId: environment.FIREBASE_APP_ID,
+      measurementId: environment.FIREBASE_MEASUREMENT_ID,
     };
 
     firebase.initializeApp(firebaseConfig);
     firebase.analytics();
 
     this.inst = firebase;
+  }
+
+  database() {
+    return firebase.database();
+  }
+
+  ref(ref) {
+    return firebase.database().ref(ref);
   }
 }

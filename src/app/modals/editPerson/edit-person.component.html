@@ -1,0 +1,208 @@
+<div class="dialog">
+  <div class="close-dialog">
+    <i (click)="onClose()" class="fas fa-times"></i>
+  </div>
+
+  <div class="header">
+    <i class="fas fa-user-plus icon"></i>
+    <p>{{model.title}}</p>
+  </div>
+
+  <div *ngIf="formLoaded">
+    <form [formGroup]="personForm">
+
+      <mat-dialog-content>
+        <div class="form col-xs-12 col-md-12 col-lg-12">
+          <h1 class="sub-title">Osobni podaci</h1>
+
+          <mat-form-field class="default-margin-right field col-xs-12 col-md-5 col-lg-5">
+            <input
+              formControlName="name"
+              [errorStateMatcher]="errorMatcher"
+              matInput
+              required
+              placeholder="Ime">
+
+            <mat-error *ngIf="personForm.get('name').hasError('required')">Ime se ne može ostaviti prazno</mat-error>
+
+          </mat-form-field>
+
+          <mat-form-field class="field col-xs-12 col-md-5 col-lg-5">
+            <input
+              formControlName="lastName"
+              [errorStateMatcher]="errorMatcher"
+              matInput
+              required
+              placeholder="Prezime">
+
+            <mat-error *ngIf="personForm.get('lastName').hasError('required')">Prezime se ne može ostaviti prazno</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="default-margin-right field col-xs-12 col-md-5 col-lg-5">
+            <input
+              formControlName="oib"
+              matInput
+              minlength="1"
+              maxlength="200"
+              placeholder="OIB">
+          </mat-form-field>
+
+          <mat-form-field class="field col-xs-12 col-md-5 col-lg-5">
+            <input
+              formControlName="personalId"
+              matInput
+              placeholder="Osobni broj">
+            <mat-hint>Broj osobne iskaznice ili bilo koji identificirajući broj ako osoba nije državljanin RH</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field class="field col-xs-12 col-md-5 col-lg-5">
+        <textarea
+          formControlName="personalNote"
+          matInput
+          placeholder="Osobna bilješka"></textarea>
+            <mat-hint>Maksimalno 1000 znakova</mat-hint>
+          </mat-form-field>
+
+          <h1 class="sub-title">Lokacijski podaci</h1>
+
+          <mat-form-field class="default-margin-right field col-xs-12 col-md-5 col-lg-5">
+            <input
+              formControlName="country"
+              [errorStateMatcher]="errorMatcher"
+              matInput
+              required
+              placeholder="Država">
+
+            <mat-error *ngIf="personForm.get('country').hasError('required')">Država ne može ostaviti prazna</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="field col-xs-12 col-md-5 col-lg-5">
+            <input
+              formControlName="city"
+              [errorStateMatcher]="errorMatcher"
+              matInput
+              placeholder="Grad/mjesto boravka">
+          </mat-form-field>
+
+          <mat-form-field class="default-margin-right field col-xs-12 col-md-5 col-lg-5">
+            <input
+              formControlName="region"
+              matInput
+              placeholder="Regija">
+          </mat-form-field>
+
+          <mat-form-field class="default-margin-right field col-xs-12 col-md-5 col-lg-5">
+            <input
+              formControlName="address"
+              matInput
+              placeholder="Adresa">
+          </mat-form-field>
+
+          <mat-form-field class="default-margin-right field col-xs-12 col-md-5 col-lg-5">
+            <input
+              formControlName="postalCode"
+              matInput
+              placeholder="Poštanski broj">
+          </mat-form-field>
+
+          <mat-form-field class="field col-xs-12 col-md-5 col-lg-5">
+      <textarea
+        formControlName="additionalLocationData"
+        matInput
+        placeholder="Dodatni podaci"></textarea>
+            <mat-hint>Maximalno 1000 znakova</mat-hint>
+          </mat-form-field>
+
+          <h1 class="sub-title">Zdravstveni podaci</h1>
+
+          <mat-form-field class="default-margin-right field col-xs-12 col-md-5 col-lg-5">
+            <mat-label>Zdravstveno stanje</mat-label>
+            <mat-select
+              required
+              (selectionChange)="onHealthChange()"
+              [(value)]="selectedHealth"
+              formControlName="healthCheck">
+              <mat-option *ngFor="let data of healthData" [value]="data.value">
+                {{data.label}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="selectedHealth && selectedHealth !== 5 && selectedHealth !== 2" class="field col-xs-12 col-md-5 col-lg-5">
+            <mat-label>{{healthChangeLabel + ' (dd/mm/YYYY)'}}</mat-label>
+            <input
+              matInput
+              formControlName="healthCheckDate"
+              [matDatepicker]="picker">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <h1 class="sub-title">Google maps podaci</h1>
+
+          <mat-form-field class="default-margin-right field col-xs-12 col-md-5 col-lg-5">
+            <input
+              formControlName="lat"
+              required
+              matInput
+              placeholder="Geografska širina (lat)">
+          </mat-form-field>
+
+          <mat-form-field class="default-margin-right field col-xs-12 col-md-5 col-lg-5">
+            <input
+              formControlName="lng"
+              required
+              matInput
+              placeholder="Geografska dužina (lng)">
+          </mat-form-field>
+
+          <h1 class="sub-title">Kontaktni podaci</h1>
+
+          <mat-form-field class="default-margin-right field col-xs-12 col-md-5 col-lg-5">
+            <input
+              formControlName="homePhone"
+              matInput
+              placeholder="Kućni telefon">
+          </mat-form-field>
+
+          <mat-form-field class="field col-xs-12 col-md-5 col-lg-5">
+            <input
+              formControlName="workPhone"
+              matInput
+              placeholder="Poslovni telefon/broj mobitela">
+          </mat-form-field>
+
+          <mat-form-field class="default-margin-right field col-xs-12 col-md-5 col-lg-5">
+            <input
+              formControlName="personalPhone"
+              matInput
+              placeholder="Osobni telefon/broj mobitela">
+          </mat-form-field>
+
+          <mat-form-field class="field col-xs-12 col-md-5 col-lg-5">
+            <input
+              formControlName="email"
+              matInput
+              placeholder="Email">
+          </mat-form-field>
+
+        </div>
+
+        <div *ngIf="firebaseError" class="error col-xs-12 col-md-12 col-lg-12"><p>Dogodila se greška pri spremanju osobe</p></div>
+        <div *ngIf="userExists" class="error col-xs-12 col-md-12 col-lg-12"><p>{{this.userExists}}</p></div>
+      </mat-dialog-content>
+
+      <div mat-dialog-actions align="end">
+        <button mat-raised-button color="warn" (click)="onClose()">Zatvori</button>
+        <button
+          mat-raised-button
+          type="submit"
+          (click)="onSave()"
+          [disabled]="!formValid" color="primary">Spremi</button>
+      </div>
+
+    </form>
+  </div>
+
+
+</div>

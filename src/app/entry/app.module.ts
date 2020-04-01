@@ -6,14 +6,18 @@ import {NgModule} from '@angular/core';
 import {MapComponent} from '../view/map/map.component';
 import {AppRoutingModule} from './app-routing.module';
 import {
-  MAT_DATE_FORMATS, MatButtonModule, MatDatepickerModule,
+  MAT_DATE_FORMATS, MatButtonModule, MatCheckboxModule, MatDatepickerModule,
   MatFormFieldModule,
   MatInputModule, MatSelectModule, MatSidenavModule,
 } from '@angular/material';
-import {MenuComponent} from '../view/shared/menu/menu.component';
 import {AddPersonDialogComponent} from '../modals/addPerson/add-person.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule} from '@angular/material-moment-adapter';
+import {GeoComponent} from '../view/geo/geo.component';
+import {SearchDialogComponent} from '../modals/search/search.component';
+import {ItemComponent} from '../modals/search/item/item.component';
+import {EditPersonDialogComponent} from '../modals/editPerson/edit-person.component';
+import {MenuComponent} from '../view/menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +25,10 @@ import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule} from '@angular/mat
     MapComponent,
     MenuComponent,
     AddPersonDialogComponent,
+    GeoComponent,
+    SearchDialogComponent,
+    ItemComponent,
+    EditPersonDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,6 +44,8 @@ import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule} from '@angular/mat
     MatMomentDateModule,
     MatSelectModule,
     MatDatepickerModule,
+    FormsModule,
+    MatCheckboxModule,
   ],
   bootstrap: [AppComponent],
   providers: [
@@ -44,16 +54,18 @@ import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule} from '@angular/mat
       provide: MAT_DATE_FORMATS,
       useValue: {
         parse: {
-          dateInput: ['l', 'LL'],
+          dateInput: ['D/MM/YYYY'],
         },
         display: {
-          dateInput: 'DD/MM/YYYY',
+          dateInput: 'D/MM/YYYY',
         },
       },
     },
   ],
   entryComponents: [
     AddPersonDialogComponent,
+    SearchDialogComponent,
+    EditPersonDialogComponent,
   ]
 })
 export class AppModule { }

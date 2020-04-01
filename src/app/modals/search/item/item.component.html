@@ -1,0 +1,103 @@
+<div
+  (click)="onSelect()"
+  [ngClass]="{'selected': selected}"
+  class="item col-xs-12 col-md-12 col-lg-12">
+  <div class="item-header col-xs-12 col-md-12 col-lg-12">
+    <label>{{person.getDisplayName()}}</label>
+
+    <i *ngIf="!selected" class="fas fa-angle-left"></i>
+    <i *ngIf="selected" class="fas fa-angle-down"></i>
+  </div>
+
+  <div *ngIf="selected" class="content col-xs-12 col-md-12 col-lg-12">
+    <div class="actions col-xs-12 col-lg-6 col-md-6">
+      <button
+        (click)="onPinMap()"
+        mat-button
+        class="action-button">Prikaži na mapi <i class="fas fa-map-pin"></i>
+      </button>
+
+      <button
+        (click)="onPersonEdit()"
+        mat-button
+        class="action-button">Ažuriraj osobu <i class="fas fa-edit"></i>
+      </button>
+    </div>
+
+    <div class="content-item col-xs-12 col-md-12 col-lg-12">
+      <label>Ime: </label><label>{{person.name}}</label>
+    </div>
+
+    <div class="content-item col-xs-12 col-md-12 col-lg-12">
+      <label>Prezime: </label><label>{{person.lastName}}</label>
+    </div>
+
+    <div class="content-item col-xs-12 col-md-12 col-lg-12">
+      <label>Država: </label><label>{{person.country}}</label>
+    </div>
+
+    <div class="content-item col-xs-12 col-md-12 col-lg-12">
+      <label>Lat: </label><label>{{person.lat}}</label>
+    </div>
+
+    <div class="content-item col-xs-12 col-md-12 col-lg-12">
+      <label>Lng: </label><label>{{person.lng}}</label>
+    </div>
+
+    <div class="content-item col-xs-12 col-md-12 col-lg-12">
+      <label>Zdravstveno stanje: </label><label>{{getHealthCheckDisplay(person.healthCheck)}}</label>
+    </div>
+
+    <div class="content-item col-xs-12 col-md-12 col-lg-12">
+      <label>Datum zdravstvenog stanja</label><label>{{person.healthCheckDate}}</label>
+    </div>
+
+    <div class="content-item col-xs-12 col-md-12 col-lg-12">
+      <label>OIB: </label><label>{{person.oib}}</label>
+    </div>
+
+    <div class="content-item col-xs-12 col-md-12 col-lg-12">
+      <label>Osobni broj: </label><label>{{person.personalId}}</label>
+    </div>
+
+    <div class="content-item col-xs-12 col-md-12 col-lg-12">
+      <label>Osobna bilješka: </label><label>{{person.personalNote}}</label>
+    </div>
+
+    <div class="content-item col-xs-12 col-md-12 col-lg-12">
+      <label>Adresa: </label><label>{{person.address}}</label>
+    </div>
+
+    <div class="content-item col-xs-12 col-md-12 col-lg-12">
+      <label>Regija: </label><label>{{person.region}}</label>
+    </div>
+
+    <div class="content-item col-xs-12 col-md-12 col-lg-12">
+      <label>Grad/mjesto boravka: </label><label>{{person.city}}</label>
+    </div>
+
+    <div class="content-item col-xs-12 col-md-12 col-lg-12">
+      <label>Poštanski broj: </label><label>{{person.postalCode}}</label>
+    </div>
+
+    <div class="content-item col-xs-12 col-md-12 col-lg-12">
+      <label>Dodatni podaci: </label><label>{{person.additionalLocationData}}</label>
+    </div>
+
+    <div class="content-item col-xs-12 col-md-12 col-lg-12">
+      <label>Kućni telefon: </label><label>{{person.homePhone}}</label>
+    </div>
+
+    <div class="content-item col-xs-12 col-md-12 col-lg-12">
+      <label>Poslovni telefon/mob: </label><label>{{person.workPhone}}</label>
+    </div>
+
+    <div class="content-item col-xs-12 col-md-12 col-lg-12">
+      <label>Osobni telefon/mob: </label><label>{{person.personalPhone}}</label>
+    </div>
+
+    <div class="content-item col-xs-12 col-md-12 col-lg-12">
+      <label>Email: </label><label>{{person.email}}</label>
+    </div>
+  </div>
+</div>

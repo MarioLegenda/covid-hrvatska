@@ -1,0 +1,21 @@
+<div class="col-xs-12 col-md-12 col-lg-12 geo">
+  <div class="coordinates">
+    <div class="item lat col-xs-12 col-md-12 col-lg-12">
+      <div class="col-xs-12 col-md-12 col-lg-12">
+        <label class="title">LAT:</label>
+        <label class="value">{{(!lat) ? '-' : lat}}</label>
+      </div>
+    </div>
+
+    <div class="item lng col-xs-12 col-md-12 col-lg-12">
+      <div class="col-xs-12 col-md-12 col-lg-12">
+        <label class="title">LNG:</label>
+        <label class="value">{{(!lng) ? '-' : lng}}</label>
+      </div>
+    </div>
+
+    <div *ngIf="lat && lng" (click)="onAddPerson()" class="create-user">
+      <i class="fas fa-user-plus"></i>
+    </div>
+  </div>
+</div>

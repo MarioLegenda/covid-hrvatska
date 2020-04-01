@@ -1,0 +1,52 @@
+@import '../../../styles/variables';
+
+.form {
+  margin: 0; padding: 0;
+  width: 100%;
+  float: left;
+
+  .default-margin-right {
+    margin-right: 5%;
+  }
+
+  .sub-title {
+    font-weight: bolder;
+    width: 100%;
+    float: left;
+    font-size: 1em;
+    margin: 40px 0 40px 0; padding: 10px 0 10px 0;
+    color: $darkGrey;
+
+    border-bottom: 1px solid $lighterGray;
+  }
+
+  .field {
+    margin-bottom: 20px;
+  }
+
+  .search-button {
+    display: block;
+    width: 100px;
+    float: left;
+    padding: 5px;
+
+    margin-left: 20px;
+
+    i {
+      font-size: 1.4em;
+      color: $darkGrey;
+    }
+  }
+}
+
+.results {
+  margin: 40px 0 40px 0;
+
+  .empty-search {
+    margin: 40px 0 40px 0;
+    font-size: 2em;
+    font-style: italic;
+    color: $lightGray;
+    text-align: center;
+  }
+}

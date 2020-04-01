@@ -1,0 +1,56 @@
+@import './../../../styles/_variables';
+
+.geo {
+  width: 100%;
+  float: left;
+  z-index: 2;
+  background-color: white;
+  padding: 10px;
+
+  .coordinates {
+    width: 280px;
+    overflow: hidden;
+    margin: 0 auto;
+    position: relative;
+
+    .item {
+      float: none;
+
+      .title {
+        width: 10%;
+        float: left;
+      }
+
+      .value {
+        width: 20%;
+        float: left;
+        padding-left: 15px;
+        text-align: center;
+      }
+    }
+
+    .create-user {
+      position: absolute;
+      top: 12px; right: 10px;
+
+      i {
+        transition: color 0.5s;
+        -webkit-transition: color 0.5s;
+        -moz-transition: color 0.5s;
+        -o-transition: color 0.5s;
+
+        font-size: 1.4em;
+        color: $darkGrey;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      &:hover i {
+        cursor: pointer;
+        color: $mainColor;
+      }
+    }
+  }
+}

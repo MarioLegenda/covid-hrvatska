@@ -1,0 +1,89 @@
+<div
+  class="menu col-xs-2 col-md-2 col-lg-2"
+  [ngClass]="{'on-expand': menuExpanded}">
+  <div class="real-menu col-xs-12 col-md-12 col-lg-12">
+    <div class="drawer">
+      <i
+        class="icon fas fa-bars"
+        (click)="onExpand()"
+      ></i>
+    </div>
+
+    <div
+      class="item"
+      (click)="onRefresh()">
+      <div class="icon-wrapper">
+        <i class="icon fas fa-sync"></i>
+      </div>
+
+      <label class="label">OSVJEŽI</label>
+    </div>
+
+    <div
+      class="item"
+      (click)="onAddPerson()">
+      <div class="icon-wrapper">
+        <i class="icon fas fa-user-plus"></i>
+      </div>
+
+      <label class="label">DODAJ</label>
+    </div>
+
+    <div
+      class="item"
+      (click)="onSearch()">
+      <div class="icon-wrapper">
+        <i class="icon fas fa-search"></i>
+      </div>
+
+      <label class="label">PRETRAŽI</label>
+    </div>
+
+  </div>
+
+  <div class="filters col-xs-12 col-md-12 col-lg-12">
+    <h1 class="title">FILTRIRANJE</h1>
+
+    <mat-checkbox
+      #a
+      value="A"
+      class="checkbox"
+      (change)="onFilterSelect('allSelected', a.value, a.checked)"
+      [(ngModel)]="allSelected">Svi</mat-checkbox>
+
+    <mat-checkbox
+      #b
+      value="Z"
+      class="checkbox"
+      (change)="onFilterSelect('infectedSelected', b.value, b.checked)"
+      [(ngModel)]="infectedSelected">(Z) Zaraženi</mat-checkbox>
+
+    <mat-checkbox
+      #c
+      value="N"
+      class="checkbox"
+      (change)="onFilterSelect('notInfectedSelected', c.value, c.checked)"
+      [(ngModel)]="notInfectedSelected">(N) Nezaraženi</mat-checkbox>
+
+    <mat-checkbox
+      #d
+      value="S"
+      class="checkbox"
+      (change)="onFilterSelect('selfIsolatedSelected', d.value, d.checked)"
+      [(ngModel)]="selfIsolatedSelected">(S) Samoizolacija</mat-checkbox>
+
+    <mat-checkbox
+      #e
+      value="I"
+      class="checkbox"
+      (change)="onFilterSelect('curedSelected', e.value, e.checked)"
+      [(ngModel)]="curedSelected">(I) Izliječeni</mat-checkbox>
+
+    <mat-checkbox
+      #f
+      value="O"
+      class="checkbox"
+      (change)="onFilterSelect('notDetermined', f.value, f.checked)"
+      [(ngModel)]="notDetermined">(O) Neodređeno</mat-checkbox>
+  </div>
+</div>

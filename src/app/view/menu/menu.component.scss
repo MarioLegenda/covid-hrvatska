@@ -1,0 +1,114 @@
+@import './../../../styles/_variables';
+
+.menu {
+  width: 200px;
+  float: left;
+  overflow: hidden;
+  z-index: 3;
+  background-color: white;
+
+  font-family: $mainFont;
+
+  transition: margin-left 0.5s, border-right 0.5s;
+  -webkit-transition: margin-left 0.5s, border-right 0.5s;
+  -moz-transition: margin-left 0.5s, border-right 0.5s;
+  -o-transition: margin-left 0.5s, border-right 0.5s;
+
+  border-right: 1px solid white;
+
+  margin-left: -156px;
+
+  .drawer {
+    position: relative;
+    width: 100%;
+    float: left;
+
+    margin-bottom: 40px;
+
+    .icon {
+      display: block;
+      float: right;
+      font-size: 1.7em;
+      color: $darkGrey;
+      top: 5px; right: 5px;
+
+      padding: 10px;
+
+      transition: color 0.5s;
+      -webkit-transition: color 0.5s;
+      -moz-transition: color 0.5s;
+      -o-transition: color 0.5s;
+
+      &:hover {
+        cursor: pointer;
+        color: $mainColor;
+      }
+    }
+  }
+
+  .item {
+    width: 100%;
+    float: left;
+    margin-bottom: 10px;
+
+    .icon-wrapper {
+      float: right;
+    }
+
+    .icon {
+      transition: color 0.5s;
+      -webkit-transition: color 0.5s;
+      -moz-transition: color 0.5s;
+      -o-transition: color 0.5s;
+
+      padding: 10px;
+      font-size: 1.2em;
+    }
+
+    .label {
+      display: block;
+      width: 150px;
+      float: left;
+      color: $darkGrey;
+      font-size: 0.9em;
+      text-align: left;
+
+      margin-top: 8px;
+    }
+
+    &:hover .icon {
+      cursor: pointer;
+      color: $mainColor;
+    }
+
+    &:hover .label {
+      color: $mainColor;
+      cursor: pointer;
+    }
+  }
+
+  .real-menu {
+    float: left;
+  }
+
+  .filters {
+    width: 100%;
+    float: left;
+
+    .title {
+      text-align: left;
+      padding-left: 10px;
+      font-size: 1em;
+      margin-bottom: 30px;
+    }
+
+    .checkbox {
+      font-size: 0.9em;
+    }
+  }
+}
+
+.on-expand {
+  margin-left: 0;
+  border-right: 4px solid $mainColor;
+}

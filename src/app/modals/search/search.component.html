@@ -1,0 +1,54 @@
+<div class="dialog">
+  <div class="close-dialog">
+    <i (click)="onClose()" class="fas fa-times"></i>
+  </div>
+
+  <div class="header">
+    <i class="fas fa-search icon"></i>
+    <p>Pretraži</p>
+  </div>
+
+  <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+
+    <mat-dialog-content>
+      <div class="form col-xs-12 col-md-12 col-lg-12">
+        <mat-form-field class="default-margin-right field col-xs-12 col-md-3 col-lg-3">
+          <input
+            formControlName="name"
+            matInput
+            placeholder="Ime">
+
+        </mat-form-field>
+
+        <mat-form-field class="field col-xs-12 col-md-3 col-lg-3">
+          <input
+            formControlName="lastName"
+            matInput
+            placeholder="Prezime">
+        </mat-form-field>
+
+        <button mat-raised-button class="search-button"><i class="fas fa-search"></i></button>
+      </div>
+
+      <div class="results col-xs-12 col-md-12 col-lg-12">
+        <p *ngIf="emptySearch" class="empty-search col-xs-12 col-md-12 col-lg-12">Nema rezultata</p>
+
+        <div *ngIf="results.length !== 0">
+          <app-person-item
+            *ngFor="let person of results"
+            (onMapSelected)="onMapSelected()"
+            (onEditPerson)="onEditPerson($event)"
+            [person]="person">
+          </app-person-item>
+        </div>
+      </div>
+
+    </mat-dialog-content>
+
+    <div mat-dialog-actions align="end">
+      <button mat-raised-button color="warn" (click)="onClose()">Zatvori</button>
+    </div>
+
+  </form>
+
+</div>

@@ -8,13 +8,9 @@
     <p>{{model.title}}</p>
   </div>
 
-  <form [formGroup]="personForm" (ngSubmit)="onSave()">
+  <form [formGroup]="personForm">
 
   <mat-dialog-content>
-      <div class="info">
-        <p>Za uspješno spremanje osobe i prikazivanje na mapi potrebni su geografska širina i dužina</p>
-      </div>
-
       <div class="form col-xs-12 col-md-12 col-lg-12">
         <h1 class="sub-title">Osobni podaci</h1>
 
@@ -45,6 +41,8 @@
           <input
             formControlName="oib"
             matInput
+            minlength="1"
+            maxlength="200"
             placeholder="OIB">
         </mat-form-field>
 
@@ -68,16 +66,16 @@
 
         <mat-form-field class="default-margin-right field col-xs-12 col-md-5 col-lg-5">
           <input
-            formControlName="state"
+            formControlName="country"
             [errorStateMatcher]="errorMatcher"
             matInput
             required
             placeholder="Država">
 
-          <mat-error *ngIf="personForm.get('state').hasError('required')">Država ne može ostaviti prazna</mat-error>
+          <mat-error *ngIf="personForm.get('country').hasError('required')">Država ne može ostaviti prazna</mat-error>
         </mat-form-field>
 
-        <mat-form-field class="default-margin-right field col-xs-12 col-md-5 col-lg-5">
+        <mat-form-field class="field col-xs-12 col-md-5 col-lg-5">
           <input
             formControlName="city"
             [errorStateMatcher]="errorMatcher"
@@ -85,7 +83,7 @@
             placeholder="Grad/mjesto boravka">
         </mat-form-field>
 
-        <mat-form-field class="field col-xs-12 col-md-5 col-lg-5">
+        <mat-form-field class="default-margin-right field col-xs-12 col-md-5 col-lg-5">
           <input
             formControlName="region"
             matInput
@@ -99,7 +97,7 @@
             placeholder="Adresa">
         </mat-form-field>
 
-        <mat-form-field class="field col-xs-12 col-md-5 col-lg-5">
+        <mat-form-field class="default-margin-right field col-xs-12 col-md-5 col-lg-5">
           <input
             formControlName="postalCode"
             matInput
@@ -109,7 +107,6 @@
         <mat-form-field class="field col-xs-12 col-md-5 col-lg-5">
       <textarea
         formControlName="additionalLocationData"
-        [errorStateMatcher]="errorMatcher"
         matInput
         placeholder="Dodatni podaci"></textarea>
           <mat-hint>Maximalno 1000 znakova</mat-hint>
@@ -130,7 +127,7 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field *ngIf="selectedHealth && selectedHealth !== 'notDetermined'" class="field col-xs-12 col-md-5 col-lg-5">
+        <mat-form-field *ngIf="selectedHealth && selectedHealth !== 5 && selectedHealth !== 2" class="field col-xs-12 col-md-5 col-lg-5">
           <mat-label>{{healthChangeLabel + ' (dd/mm/YYYY)'}}</mat-label>
           <input
             matInput
@@ -157,14 +154,50 @@
             matInput
             placeholder="Geografska dužina (lng)">
         </mat-form-field>
+
+        <h1 class="sub-title">Kontaktni podaci</h1>
+
+        <mat-form-field class="default-margin-right field col-xs-12 col-md-5 col-lg-5">
+          <input
+            formControlName="homePhone"
+            matInput
+            placeholder="Kućni telefon">
+        </mat-form-field>
+
+        <mat-form-field class="field col-xs-12 col-md-5 col-lg-5">
+          <input
+            formControlName="workPhone"
+            matInput
+            placeholder="Poslovni telefon/broj mobitela">
+        </mat-form-field>
+
+        <mat-form-field class="default-margin-right field col-xs-12 col-md-5 col-lg-5">
+          <input
+            formControlName="personalPhone"
+            matInput
+            placeholder="Osobni telefon/broj mobitela">
+        </mat-form-field>
+
+        <mat-form-field class="field col-xs-12 col-md-5 col-lg-5">
+          <input
+            formControlName="email"
+            matInput
+            placeholder="Email">
+        </mat-form-field>
+
       </div>
+
+    <div *ngIf="firebaseError" class="error col-xs-12 col-md-12 col-lg-12"><p>Dogodila se greška pri spremanju osobe</p></div>
+    <div *ngIf="userExists" class="error col-xs-12 col-md-12 col-lg-12"><p>{{this.userExists}}</p></div>
   </mat-dialog-content>
 
   <div mat-dialog-actions align="end">
+
     <button mat-raised-button color="warn" (click)="onClose()">Zatvori</button>
     <button
       mat-raised-button
       type="submit"
+      (click)="onSave()"
       [disabled]="!personForm.valid" color="primary">Spremi</button>
   </div>
 

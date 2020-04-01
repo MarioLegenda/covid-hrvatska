@@ -9,14 +9,15 @@ import {PeopleRepository} from '../../services/PeopleRepository';
 import {Subscription} from 'rxjs';
 
 @Component({
-  selector: 'app-add-person-dialog',
-  templateUrl: './add-person.component.html',
+  selector: 'app-edit-person-dialog',
+  templateUrl: './edit-person.component.html',
   styleUrls: [
-    './add-person.component.scss',
+    './edit-person.component.scss',
     '../../view/shared/scss/global-dialog.component.scss',
   ]
 })
-export class AddPersonDialogComponent implements OnInit, OnDestroy {
+export class EditPersonDialogComponent implements OnInit, OnDestroy {
+  person: Person = null;
   errorMatcher = new ErrorMatcher();
 
   selectedHealth = null;
@@ -24,7 +25,6 @@ export class AddPersonDialogComponent implements OnInit, OnDestroy {
 
   firebaseError = false;
   userExists = null;
-  inFlight = false;
 
   healthData = [
     {
@@ -49,26 +49,38 @@ export class AddPersonDialogComponent implements OnInit, OnDestroy {
     }
   ];
 
-  personForm = StaticPersonForm.createForm();
+  personForm = null;
+  formValid = false;
+  formLoaded = false;
 
-  private saveSubscriber: Subscription;
+  private updateSubscription: Subscription;
 
   constructor(
-    public dialogRef: MatDialogRef<AddPersonDialogComponent>,
+    public dialogRef: MatDialogRef<EditPersonDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public model: any,
-    private googleMaps: GoogleMaps,
-    private peopleRepository: PeopleRepository)
+    private peopleRepository: PeopleRepository,
+    private googleMaps: GoogleMaps)
   {}
 
   ngOnInit() {
-    if (this.model.lat) this.personForm.get('lat').setValue(this.model.lat);
-    if (this.model.lng) this.personForm.get('lng').setValue(this.model.lng);
+    this.personForm = StaticPersonForm.createExistingForm(this.model.person);
+
+    this.selectedHealth = this.model.person.healthCheck;
+
+    this.onHealthChange();
+
+    if (this.model.lat) this.personForm.get('lat').setValue(this.person.lat);
+    if (this.model.lng) this.personForm.get('lng').setValue(this.person.lng);
+
+    this.formValid = this.personForm.valid;
+
+    this.formLoaded = true;
   }
 
   ngOnDestroy() {
-    if (this.saveSubscriber) {
-      this.saveSubscriber.unsubscribe();
-      this.saveSubscriber = null;
+    if (this.updateSubscription) {
+      this.updateSubscription.unsubscribe();
+      this.updateSubscription = null;
     }
   }
 
@@ -90,37 +102,29 @@ export class AddPersonDialogComponent implements OnInit, OnDestroy {
   }
 
   onSave() {
-    if (this.inFlight) return;
-
-    this.inFlight = true;
     const values = this.personForm.value;
     this.firebaseError = false;
     this.userExists = null;
 
-    if (values.healthCheckDate) {
-      values.healthCheckDate = this.personForm.value.healthCheckDate.format('DD/MM/YYYY');
+    if (values.healthCheckDate && Object.prototype.toString.call(values.healthCheckDate) === '[object Date]') {
+      const date = values.healthCheckDate;
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear();
+      values.healthCheckDate = `${day}/${month}/${year}`;
+    } else {
+      values.healthCheckDate = this.personForm.value.healthCheckDate.format('D/M/YYYY');
     }
 
     const person: Person = Person.fromObject(values);
 
-    this.peopleRepository.savePerson(person).subscribe((model) => {
+    this.updateSubscription = this.peopleRepository.updatePerson(person).subscribe((model) => {
       if (model.error) {
-        const message = model.error.message;
-
-        if (message === 'firebase_error') {
-          this.firebaseError = true;
-        } else if (message === 'user_exists') {
-          return this.userExists = `Osoba sa ovim imenom i koordinatam je već unesena.`
-        }
-
-        this.inFlight = false;
-
+        console.log('There has been an error');
         return;
       }
 
-      const person: Person = model.person;
-
-      this.googleMaps.addMarker(person.getDisplayName(), person);
+      this.googleMaps.updateMarker(person);
 
       this.dialogRef.close();
     });

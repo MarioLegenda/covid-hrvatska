@@ -90,8 +90,10 @@
   }
 
   .error {
-    background-color: $darkGrey;
-    border-left: 4px solid $darkGrey;
+    width: 100%;
+    float: left;
+    background-color: $lightRed;
+    border-left: 4px solid $dangerRed;
     color: white;
 
     font-size: 0.9em;
