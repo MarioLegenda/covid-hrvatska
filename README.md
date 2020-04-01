@@ -7,7 +7,12 @@ sa Google Firebase-om, ovu aplikaciju može postaviti svatko koristeći svoju za
 Setupiranje Google Firebase je dosta jednostavno. Nakon što napravite novi račun i projekt,
 u `/src/environments/environment.prod.ts` i jednostavno copy/paste vaših ključeva u ovaj file.
 
-Nakon toga, potrebno je napraviti račun i za Google maps odnosno API key. 
+Nakon toga, potrebno je napraviti račun i za Google maps odnosno API key. Nakon što generirate API ključ,
+otvorite `/src/index.html` file. Nađite `<script>` element sličan ovom
+
+`<script src="https://maps.googleapis.com/maps/api/js?key=VAS_API_KLJUC_IDE_OVDJE"></script>`
+
+i stavite svoj API ključ ovdje.
 
 Nakon što postavite gornje postavke, potrebno je deplojati projekt. Projekt deplojate
 pomoću [Firebase CLI](https://firebase.google.com/docs/cli). Korištenje ovog CLI-a je poprilično
