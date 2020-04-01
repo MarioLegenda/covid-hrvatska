@@ -125,7 +125,7 @@ export class PeopleRepository {
     return this.updatePersonSubject;
   }
 
-  searchByChild(field: string, value: string, limit: number = 10) {
+  searchByChild(field: string, value: string, limit: number = 100) {
     return this.firebase.ref('/people/list')
       .orderByChild(field)
       .limitToFirst(limit)

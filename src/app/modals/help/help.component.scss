@@ -1,0 +1,26 @@
+@import '../../../styles/variables';
+
+.content {
+  .title {
+    font-size: 1.3em;
+    border-bottom: 1px solid $almostWhiteGray;
+
+    margin-bottom: 20px;
+  }
+
+  .sub-content {
+    margin-bottom: 40px;
+
+    p {
+      line-height: 1.8em;
+
+      span {
+        font-weight: bolder;
+      }
+
+      i {
+        color: $darkGrey;
+      }
+    }
+  }
+}

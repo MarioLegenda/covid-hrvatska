@@ -18,6 +18,7 @@ import {SearchDialogComponent} from '../modals/search/search.component';
 import {ItemComponent} from '../modals/search/item/item.component';
 import {EditPersonDialogComponent} from '../modals/editPerson/edit-person.component';
 import {MenuComponent} from '../view/menu/menu.component';
+import {HelpDialogComponent} from '../modals/help/help.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import {MenuComponent} from '../view/menu/menu.component';
     SearchDialogComponent,
     ItemComponent,
     EditPersonDialogComponent,
+    HelpDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,6 +68,7 @@ import {MenuComponent} from '../view/menu/menu.component';
     AddPersonDialogComponent,
     SearchDialogComponent,
     EditPersonDialogComponent,
+    HelpDialogComponent,
   ]
 })
 export class AppModule { }

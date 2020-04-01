@@ -7,6 +7,7 @@ import {Person} from '../../model/Person';
 import {PeopleRepository} from '../../services/PeopleRepository';
 import {Subscription} from 'rxjs';
 import {reset, handle, getRepresentationByCode, getCompleteStatus} from '../../services/checkboxFrontendRepresentation';
+import {HelpDialogComponent} from '../../modals/help/help.component';
 
 @Component({
   selector: 'app-menu',
@@ -65,6 +66,7 @@ export class MenuComponent implements OnDestroy {
   onAddPerson() {
     this.dialog.open(AddPersonDialogComponent, {
       width: '90%',
+      panelClass: 'dialog',
       data: {
         title: 'Dodaj novu osobu'
       },
@@ -74,6 +76,7 @@ export class MenuComponent implements OnDestroy {
   onSearch() {
     this.dialog.open(SearchDialogComponent, {
       width: '90%',
+      panelClass: 'dialog',
       data: {
         title: 'Pretraži'
       },
@@ -85,6 +88,16 @@ export class MenuComponent implements OnDestroy {
     this.googleMaps.showHealthCheck([]);
 
     this.loadAllPeople();
+  }
+
+  onHelp() {
+    this.dialog.open(HelpDialogComponent, {
+      width: '90%',
+      panelClass: 'dialog',
+      data: {
+        title: 'Pretraži'
+      },
+    });
   }
 
   private loadAllPeople(): void {

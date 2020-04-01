@@ -62,6 +62,7 @@ export class SearchDialogComponent {
 
       this.dialog.open(EditPersonDialogComponent, {
         width: '90%',
+        panelClass: 'dialog',
         data: {
           title: 'Ažuriraj osobu',
           person: $event,

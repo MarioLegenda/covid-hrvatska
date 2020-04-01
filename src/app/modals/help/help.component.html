@@ -1,0 +1,108 @@
+<div class="dialog">
+  <div class="close-dialog">
+    <i (click)="onClose()" class="fas fa-times"></i>
+  </div>
+
+  <div class="header">
+    <i class="fas fa-info-circle icon"></i>
+    <p>Pomoć</p>
+  </div>
+
+  <mat-dialog-content>
+    <div class="content">
+      <h1 class="title">Svrha aplikacije</h1>
+
+      <div class="sub-content">
+        <p>
+          Svrha ove aplikacije je evidentiranje osoba u svrhu bolje borbe protiv Covid-19 virusa ali nije kompletan proizvod. Sa ovom aplikacijom možete
+          pratiti boravište svih koje uvedete u sustav ali nema statistike o oboljelima, ozdravljenima i drugim osobama koje uvedete u sustav. Glavna svrha
+          ove aplikacije je prikaz na Google mapi zbog lakšeg (interaktivnog) snalaženja sa sadašnjom situacijom.
+        </p>
+      </div>
+
+      <h1 class="title">Općenito o sustavu</h1>
+
+      <div class="sub-content">
+        <p>
+          Na lijevom dijelu aplikacije je glavni meni na kojem možete unositi osobe u sustav, pretražiti osobe uvedene u sustav
+          te filtrirati osobe s obzirom na uneseno zdravstveno stanje. Na gornjem dijelu se nalaze podaci o geografskoj širini i dužini.
+          Kada kliknete na bilo koji dio na mapi, geografska širina i dužina se prikažu na tom dijelu. U isto vrijeme, prikaže se i ikona
+          za dodavanje novog korisnika. Ako kliknete na nju, izabrana geografska širina i dužina su automatski unesene u formu za
+          unošenje nove osobe.
+        </p>
+      </div>
+
+      <h1 class="title">Dodavanje nove osobe u sustav</h1>
+
+      <div class="sub-content">
+        <p>
+          Postoje dva načina da unosete novu osobu u sustav: na lijevom meniju te nakon što kliknete na određeni dio mape.
+        </p>
+
+        <p>
+          Na lijevom dijelu, kliknite na ikonu <i class="fas fa-user-plus"></i>. Pojavit će se novi prozor sa formom za unos nove osobe.
+          Jedina obavezna polja su <span>Ime</span>, <span>Prezime</span>, <span>Država</span>, <span>Zdravstveno stanje</span>,
+          <span>Geografska širina</span> te <span>Geografska dužina</span>. Sva ostala polja su opcionalna.
+        </p>
+
+        <p>
+          Nakon što unesete novu osobu, ona će se automatski prikazati kao pin na mapi s obzirom na geografsku širinu i dužinu. Ako kliknete
+          na jedan od pinova, prikazat će vam se podaci o osobi koju ste unijeli.
+        </p>
+      </div>
+
+      <div class="sub-content">
+        <p>
+          Drugi način unošenja osobe je sličan prvom. Nakon što kliknete na bilo koji dio mape, u gornjem dijelu će vam se prikazati
+          geografska širina <span>(LAT)</span> te geografska dužina <span>(LNG)</span>. U isto vrijeme, pokraj njih, prikazat će se
+          i ikona <i class="fas fa-user-plus"></i>. Ako kliknete na nju, prikazat će vam se forma za unos nove osobe gdje će geografska
+          širina i dužina biti automatski unesene.
+        </p>
+      </div>
+
+      <h1 class="title">Pretraga osoba unesenih u sustav</h1>
+
+      <div class="sub-content">
+        <p>
+          Osobe pretražujete klikajući na ikonu <i class="fas fa-search"></i> u lijevom meniju. Otvorit će vam se prozor u kojem
+          su prikazana polja <span>Ime</span> i <span>Prezime</span>. Možete unijeti ili samo ime ili samo prezime ili oboje. Pretraga
+          ne dopušta parcijalno pretraživanje korisnika. Morate napisati puno ime, puno prezime ili oboje da bi pretraga uspjela.
+        </p>
+
+        <p>Ako želite izdvojiti traženog korisnika na mapi, kliknite na jedan od blokova iz pretrage i kliknite na <span>Prikaži na mapi</span></p>
+      </div>
+
+      <h1 class="title">Ažuriranje podataka osoba unesenih u sustav</h1>
+
+      <div class="sub-content">
+        <p>
+          Da bi ažurirali osobe unesene u sustav, prvo nađite traženu osobu u pretrazi. Nakon što je nađete, izaberite blok osobe
+          i kliknite na gumb <span>Ažuriraj osobu</span>. Pokazat će vam se isti prozor kao i za unošenje novog korisnika sa već unesenim
+          podacija trenutno izabranog korisnika.
+        </p>
+      </div>
+
+      <h1 class="title">Filtriranje korisnika</h1>
+
+      <div class="sub-content">
+        <p>
+          Korisnike možete filtrirati u lijevom menije s obzirom na njihovo zdravstveno stanje. Kliknite na bilo koje zdravstveno stanje
+          i samo izabrani korisnici će vam se prikazati na mapi.
+        </p>
+      </div>
+
+      <h1 class="title">Greške u sustavu</h1>
+
+      <div class="sub-content">
+        <p>
+          Ako se dogode greške u sustavu, kliknite na ikonu <i class="fas fa-sync"></i> u lijevom meniju. To će osvježiti
+          sve korisnike na mapi. Ako i to ne riješi grešku, osvježite cijelu aplikaciju na browseru (pretraživaču) koji koristite.
+        </p>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <div mat-dialog-actions align="end">
+    <button mat-raised-button color="warn" (click)="onClose()">Zatvori</button>
+  </div>
+</div>
